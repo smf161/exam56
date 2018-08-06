@@ -31,7 +31,7 @@
 
 //第四種
 Route::get('/', function () {
-    $name = 'tad';
+    $name = '<u>tad</u>';
     $say  = '~hi~';
 
     return view('welcome', compact('name', 'say'));
