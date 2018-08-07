@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exam;
+use App\Http\Requests\ExamRequest;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
@@ -33,9 +35,37 @@ class ExamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    //public function store(Request $request)
+    public function store(ExamRequest $request)
     {
-        //
+        // $this->validate($request, [
+        //     'title' => 'required|min:2|max:191',
+        // ], [
+        //     'required' => '「:attribute」為必填欄位',
+        //     'min'      => '「:attribute」至少要 :min 個字',
+        //     'max'      => '「:attribute」最多只能 :max 個字',
+        // ]);
+
+        // store方法一
+        // $exam          = new Exam;
+        // $exam->title   = $request->title;
+        // $exam->user_id = $request->user_id;
+        // $exam->enable  = $request->enable;
+        // $exam->save();
+        // return redirect()->route('exam.index');
+
+        //store方法二
+        // Exam::create([
+        //     'title'   => $request->title,
+        //     'user_id' => $request->user_id,
+        //     'enable'  => $request->enable,
+        // ]);
+        // return redirect()->route('exam.index');
+
+        //store方法三最簡單
+        Exam::create($request->all());
+        return redirect()->route('exam.index');
+
     }
 
     /**
@@ -67,7 +97,8 @@ class ExamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    //public function update(Request $request, $id)
+    public function update(ExamRequest $request, $id)
     {
         //
     }
