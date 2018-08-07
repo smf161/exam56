@@ -31,12 +31,16 @@
 
 //第四種
 Route::get('/', function () {
-    $name = '<u>tad</u>';
-    $say  = '~hi~';
-
-    return view('welcome', compact('name', 'say'));
+    return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Route::get('/exam/create', function () {
+//     return view('exam.create');
+// })->name('exam.create');
+
+Route::get('/exam', 'ExamController@index')->name('exam.index');
+Route::get('/exam/create', 'ExamController@create')->name('exam.create');

@@ -2,9 +2,6 @@
 @section('content')
 {{-- 輸出主內容 --}}
         <h1>隨機題庫系統</h1>
-        {{$name}}
-        <br>
-        {{!!$name!!}}
 @endsection
 
 
