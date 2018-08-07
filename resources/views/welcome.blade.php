@@ -8,7 +8,7 @@
 @endsection
 
 
-@section('my_menu')
+{{-- @section('my_menu')
     @parent
     <li><a class="nav-link" href="/add">新增題庫</a></li>
-@stop
+@stop --}}

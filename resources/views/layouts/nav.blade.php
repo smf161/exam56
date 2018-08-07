@@ -25,7 +25,9 @@
                             </li>
                         @else
                             @section('my_menu')
-                             <li><a class="nav-link" href="/home">{{ __('Home') }}</a></li>
+                                @role('管理員')
+                                    <li><a class="nav-link" href="/admin">{{ __('Admin') }}</a></li>
+                                @endrole
                             @show
 
 
