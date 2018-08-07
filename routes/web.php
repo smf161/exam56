@@ -30,13 +30,11 @@
 // });
 
 //第四種
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ExamController@index')->name('index');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'ExamController@index')->name('home');
 
 // Route::get('/exam/create', function () {
 //     return view('exam.create');
