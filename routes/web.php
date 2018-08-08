@@ -1,5 +1,7 @@
 <?php
 
+Route::pattern('id', '[0-9]+');
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,7 +43,7 @@ Route::get('/home', 'ExamController@index')->name('home');
 // })->name('exam.create');
 
 Route::get('/exam', 'ExamController@index')->name('exam.index');
+Route::get('/exam/{id}', 'ExamController@show')->name('exam.show'); //讀出單一測驗
 Route::get('/exam/create', 'ExamController@create')->name('exam.create');
 
-Route::post('/exam/', 'ExamController@store')->name('exam.store');
-Route::get('/exam/{id}', 'ExamController@show')->name('exam.show'); //讀出單一測驗
+Route::post('/exam', 'ExamController@store')->name('exam.store'); //寫入資料庫
