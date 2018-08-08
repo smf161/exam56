@@ -23,7 +23,7 @@ class ExamController extends Controller
         })
             ->orderBy('created_at', 'desc')
         //->take(1) //限制筆數,做分頁有另外寫法
-            ->paginate(1);
+            ->paginate(1); //做分頁
         //->get();
         return view('exam.index', compact('exams'));
     }
@@ -84,9 +84,13 @@ class ExamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    //public function show($id) //取得的是id
+
+    public function show(Exam $exam) //類型約束,取得的是資料全部
+
     {
-        $exam = Exam::find($id);
+        //$exam = Exam::find($id); //類型約束則不用
+        //dd($exam);
         return view('exam.show', compact('exam'));
     }
 
