@@ -15,7 +15,16 @@ class ExamController extends Controller
      */
     public function index()
     {
-        $exams = Exam::all();
+        //$exams = Exam::all();
+        //$exams = Exam::where('enable', 1)
+        $exams = Exam::where(function ($query) {
+            $query->where('enable', 1)
+                ->orWhere('user_id', 1);
+        })
+            ->orderBy('created_at', 'desc')
+        //->take(1) //限制筆數,做分頁有另外寫法
+            ->paginate(2);
+        //->get();
         return view('exam.index', compact('exams'));
     }
 
