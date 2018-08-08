@@ -47,3 +47,5 @@ Route::get('/exam/{exam}', 'ExamController@show')->name('exam.show'); //讀出�
 Route::get('/exam/create', 'ExamController@create')->name('exam.create');
 
 Route::post('/exam', 'ExamController@store')->name('exam.store'); //寫入資料庫
+
+Route::post('/topic', 'TopicController@store')->name('topic.store');
