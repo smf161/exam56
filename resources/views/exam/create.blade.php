@@ -2,7 +2,15 @@
 @section('content')
     <h1>{{ __('Create Exam') }}</h1>
     @can('建立測驗')
-        {{ bs()->openForm('post', '/exam') }}
+        {{-- 因為編輯造成error,所以加了判斷,另外給ID,用雙引號 --}}
+        
+        @if(isset($exam))
+            {{ bs()->openForm('patch', "/exam/{$exam->id}" , [ 'model' => $exam]) }}
+        @else
+            {{ bs()->openForm('post', '/exam') }}
+        @endif
+
+        {{-- {{ bs()->openForm('post', '/exam',['model' => $exam, ]) }}  --}}
 
         {{ bs()->formGroup()
             ->label('測驗標題', false, 'text-sm-right')
@@ -24,13 +32,14 @@
             {{ bs()->formGroup()
                 ->label('是否啟用', false, 'text-sm-right')
                 ->control(bs()->radioGroup('enable', [1 => '啟用', 0 => '關閉'])
-                    ->selectedOption(1)
+                    //->selectedOption(1)
+                    ->selectedOption(isset($exam)?$exam->enable:1) //編輯時,要變更為選擇
                     ->inline())
                 ->showAsRow() }}
 
             {{ bs()->submit('儲存') }}
 
-        {{ bs()->closeForm() }}
+            {{ bs()->closeForm() }}
         @else    
 
         {{-- @component('bs::alert', ['type' => 'danger'])

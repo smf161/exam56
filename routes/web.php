@@ -42,10 +42,14 @@ Route::get('/home', 'ExamController@index')->name('home');
 //     return view('exam.create');
 // })->name('exam.create');
 
-Route::get('/exam', 'ExamController@index')->name('exam.index');
+Route::get('/exam', 'ExamController@index')->name('exam.index'); //列表
 Route::get('/exam/{exam}', 'ExamController@show')->name('exam.show'); //讀出單一測驗
 Route::get('/exam/create', 'ExamController@create')->name('exam.create');
 
 Route::post('/exam', 'ExamController@store')->name('exam.store'); //寫入資料庫
 
-Route::post('/topic', 'TopicController@store')->name('topic.store');
+Route::get('/exam/{exam}/edit', 'ExamController@edit')->name('exam.edit'); //編輯
+
+Route::patch('/exam/{exam}', 'ExamController@update')->name('exam.update'); //更新
+
+Route::post('/topic', 'TopicController@store')->name('topic.store'); //寫入題目
