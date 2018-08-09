@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TopicRequest;
+use App\topic;
 use Illuminate\Http\Request;
 
 class TopicController extends Controller
@@ -56,9 +57,10 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Topic $topic)
     {
-        //
+        $exam = $topic->exam;
+        return view('exam.show', compact('topic', 'exam'));
     }
 
     /**
@@ -68,9 +70,10 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TopicRequest $request, $id)
+    public function update(TopicRequest $request, Topic $topic)
     {
-        //
+        $topic->update($request->all());
+        return redirect()->route('exam.show', $topic->exam_id);
     }
 
     /**
@@ -79,8 +82,10 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Topic $topic)
+    //刪除資料
     {
-        //
+        $topic->delete();
+        // return redirect()->route('exam.show', $topic->exam_id);
     }
 }

@@ -30,6 +30,7 @@
 // });
 
 Route::pattern('exam', '[0-9]+');
+Route::pattern('topic', '[0-9]+');
 
 //第四種
 Route::get('/', 'ExamController@index')->name('index');
@@ -52,4 +53,12 @@ Route::get('/exam/{exam}/edit', 'ExamController@edit')->name('exam.edit'); //編
 
 Route::patch('/exam/{exam}', 'ExamController@update')->name('exam.update'); //更新
 
+Route::delete('/exam/{exam}', 'ExamController@destroy')->name('exam.destroy'); //刪除測驗
+
 Route::post('/topic', 'TopicController@store')->name('topic.store'); //寫入題目
+
+Route::get('/topic/{topic}/edit', 'TopicController@edit')->name('topic.edit'); //編輯題目
+
+Route::patch('/topic/{topic}', 'TopicController@update')->name('topic.update'); //更新題目
+
+Route::delete('/topic/{topic}', 'TopicController@destroy')->name('topic.destroy'); //刪除題目

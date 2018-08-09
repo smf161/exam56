@@ -33,7 +33,7 @@
                 ->label('是否啟用', false, 'text-sm-right')
                 ->control(bs()->radioGroup('enable', [1 => '啟用', 0 => '關閉'])
                     //->selectedOption(1)
-                    ->selectedOption(isset($exam)?$exam->enable:1) //編輯時,要變更為選擇
+                    //->selectedOption(isset($exam)?$exam->enable:1) //編輯時,要變更為選擇,可以不用
                     ->inline())
                 ->showAsRow() }}
 
