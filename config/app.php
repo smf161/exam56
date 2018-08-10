@@ -151,6 +151,8 @@ return [
          * Package Service Providers...
          */
 
+        T301000\LaravelNtpcOpenid\NtpcOpenidServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

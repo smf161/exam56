@@ -67,3 +67,9 @@ Route::delete('/topic/{topic}', 'TopicController@destroy')->name('topic.destroy'
 Route::post('/test', 'TestController@store')->name('test.store'); //寫入答案
 
 Route::get('/test/{test}', 'TestController@show')->name('test.show'); //寫入學生作答
+
+// 處理表單，導向至 NTPC OpenID 登入
+Route::post('auth/login/openid', 'OpenIDController@ntpcopenid')->name('ntpcopenid');
+
+// OpenID 導回
+Route::get('auth/login/openid', 'OpenIDController@get_ntpcopenid')->name('get_ntpcopenid');

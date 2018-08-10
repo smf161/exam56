@@ -60,11 +60,16 @@ class TestController extends Controller
         //依據答對比例算分
         $score = round(100 * ($right_ans / $show_num), 0);
 
+        $stu_info = session('pref/language');
+
         $test = Test::create([
             'content' => $content,
             'user_id' => $request->user_id,
             'exam_id' => $request->exam_id,
             'score'   => $score,
+            'grade'   => substr($stu_info, 0, 2),
+            'class'   => substr($stu_info, 2, 2),
+            'num'     => substr($stu_info, 4, 2),
         ]);
 
         return redirect()->route('test.show', $test->id);

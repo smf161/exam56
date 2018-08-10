@@ -17,6 +17,15 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
+
+                        {{-- OPENID --}}
+                        <li class="nav-item">
+                            <form action="/auth/login/openid" method="post" style="display:inline">
+                                @csrf
+                                <button class="btn btn-link">新北市OpenID 登入</button>
+                            </form>
+                        </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
