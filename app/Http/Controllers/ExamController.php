@@ -103,6 +103,16 @@ class ExamController extends Controller
     public function show(Exam $exam) //類型約束,取得的是資料全部
 
     {
+        //學生登入,進行測驗
+        $user = Auth::user();
+        //檢查登入與否方法一
+        if ($user and $user->can('進行測驗')) {
+            $show_num = 5;
+            if ($exam->topics->count() > $show_num) { //少於5題會出錯
+                $exam->topics = $exam->topics->random($show_num); //抓題目,挑5題,再存回
+            }
+        }
+
         //$exam = Exam::find($id); //類型約束則不用
         //dd($exam);
         //return view('exam.show', compact('exam'));

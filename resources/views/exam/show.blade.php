@@ -22,125 +22,37 @@
     {{-- 題目表單 --}}
 
     @can('建立測驗')
-
-
-        @if(isset($topic))
-            {{ bs()->openForm('patch', "/topic/{$topic->id}", ['model' => $topic]) }}
-        @else
-            {{ bs()->openForm('post', '/topic') }}
-        @endif
-
-
-
-
-        {{-- {{ bs()->openForm('post', '/topic') }} --}}
-            {{ bs()->formGroup()
-                    ->label('題目內容', false, 'text-sm-right')//true 則不顯示
-                    ->control(bs()->textarea('topic')->placeholder('請輸入題目內容'))
-                    ->showAsRow() }}
-            {{ bs()->formGroup()
-                    ->label('選項1', false, 'text-sm-right')
-                    ->control(bs()->text('opt1')->placeholder('輸入選項1'))
-                    ->showAsRow() }}
-            {{ bs()->formGroup()
-                    ->label('選項2', false, 'text-sm-right')
-                    ->control(bs()->text('opt2')->placeholder('輸入選項2'))
-                    ->showAsRow() }}
-            {{ bs()->formGroup()
-                    ->label('選項3', false, 'text-sm-right')
-                    ->control(bs()->text('opt3')->placeholder('輸入選項3'))
-                    ->showAsRow() }}
-            {{ bs()->formGroup()
-                    ->label('選項4', false, 'text-sm-right')
-                    ->control(bs()->text('opt4')->placeholder('輸入選項4'))
-                    ->showAsRow() }}
-
-        {{ bs()->formGroup()
-                ->label('正確解答', false, 'text-sm-right')
-                ->control(bs()->radioGroup('ans', [1=>'1', 2=>'2', 3=>'3', 4=>'4'])
-                        ->inline()
-                        ->addRadioClass(['my-1','mx-3']))
-                ->showAsRow() }}
-
-        {{-- {{ bs()->formGroup()
-                ->label('正確解答', false, 'text-sm-right')
-                ->control(bs()->select('ans',[1=>1, 2=>2, 3=>3, 4=>4])->placeholder('請設定正確解答'))
-                ->showAsRow() }} --}}
-
-
-
-        {{ bs()->hidden('exam_id', $exam->id) }}
-        {{ bs()->formGroup()
-                ->label('')
-                ->control(bs()->submit('儲存'))
-                ->showAsRow() }}
-
-        {{ bs()->closeForm() }}
+        @include('exam.form');//程式碼外移
     @endcan
 
-    <div class="text-center">
-        發佈於 {{$exam->created_at->format("Y年m月d日 H:i:s")}} / 最後更新： {{$exam->updated_at->format("Y年m月d日 H:i:s")}}
-    </div>
-
     {{-- 題目列表 --}}
+    {{-- 進行測驗學生產生表單及交卷按鈕 --}}
+    @if(Auth::check())
+        @can('進行測驗')
 
-    {{-- @forelse($topics as $topic)
-            <li>{{ $topic->topic }}</li>
-    @empty
-        <div class="alert alert-danger">
-            尚無題目
+            {{ bs()->openForm('post', '/test') }}
+
+            @include('exam.topic');
+            
+            {{ bs()->hidden('exam_id', $exam->id) }}
+            {{ bs()->hidden('user_id', Auth::id()) }}
+            <div class="text-center my-5">
+                {{ bs()->submit('交卷')->sizeLarge() }}
+            </div>
+            {{ bs()->closeForm() }}
+        @else        
+            @include('exam.topic');
+        @endcan
+    @else
+        <div class="alert alert-info">
+            <h3>本測驗共有 {{ $exam->topics->count() }} 題，登入後始能進行測驗或編輯題目</h3>
         </div>
-    @endforelse --}}
-
-    {{-- 處理題號 --}}
-    @forelse($exam->topics as $key=>$topic)
-        <dl>
-            <dt class="h3">
-                {{-- 老師才看得到答案 --}}
-                
-
-                {{-- <form action="{{route('topic.destroy', $topic->id)}}"  method="post" style="display:inline">
-                    @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn-danger">刪除</button>
-                </form> --}}
+    @endif  
 
 
-
-                @can('建立測驗') 
-                    <button type="button" class="btn btn-danger btn-del-topic" data-id="{{ $topic->id }}">刪除</button>
-                    <a href="{{route('topic.edit', $topic->id)}}" class="btn btn-warning">編輯</a> 
-                    ( {{$topic->ans}} )
-                @endcan
-
-                <span class="badge badge-success">{{ $key+1 }}</span>
-                {{ $topic->topic }}
-            </dt>
-            <dd class="opt">
-                {{ bs()->radioGroup("ans[$topic->id]", [
-                    1 => "&#10102; $topic->opt1", 
-                    2 => "&#10103; $topic->opt2",  
-                    3 => "&#10104; $topic->opt3",  
-                    4 => "&#10105; $topic->opt4", 
-                    ])
-                    ->selectedOption((Auth::user() and Auth::user()->can('建立測驗'))?$topic->ans:0) //老師才看得到答案
-                    //->inline() //直排或橫排
-                    ->addRadioClass(['my-1','mx-3'])
-                }}
-
-
-
-            </dd>
-        </dl>
-    @empty
-        <div class="alert alert-danger">
-            尚無題目
+        <div class="text-center">
+            {{ $exam->user->name }} ({{ $exam->user->email }}) 發佈於 {{ $exam->created_at->format("Y年m月d日 H:i:s") }} / 最後更新： {{ $exam->updated_at->format("Y年m月d日 H:i:s") }}
         </div>
-    @endforelse
-
-
-
-
 
 @endsection
 

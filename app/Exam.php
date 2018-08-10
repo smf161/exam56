@@ -18,6 +18,13 @@ class Exam extends Model
 
     public function topics()
     {
+        //關聯
         return $this->hasMany('App\Topic');
+    }
+
+    public function user()
+    //關聯
+    {
+        return $this->belongsTo('App\User');
     }
 }

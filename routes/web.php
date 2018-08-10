@@ -31,6 +31,7 @@
 
 Route::pattern('exam', '[0-9]+');
 Route::pattern('topic', '[0-9]+');
+Route::pattern('test', '[0-9]+');
 
 //第四種
 Route::get('/', 'ExamController@index')->name('index');
@@ -62,3 +63,7 @@ Route::get('/topic/{topic}/edit', 'TopicController@edit')->name('topic.edit'); /
 Route::patch('/topic/{topic}', 'TopicController@update')->name('topic.update'); //更新題目
 
 Route::delete('/topic/{topic}', 'TopicController@destroy')->name('topic.destroy'); //刪除題目
+
+Route::post('/test', 'TestController@store')->name('test.store'); //寫入答案
+
+Route::get('/test/{test}', 'TestController@show')->name('test.show'); //寫入學生作答
